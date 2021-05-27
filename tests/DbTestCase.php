@@ -36,6 +36,51 @@ class DbTestCase extends PHPUnit\Framework\TestCase {
 
   
 
+  protected function setUp() {
+      global $DB;
+
+      // Need Innodb -- $DB->begin_transaction() -- workaround:
+      $DB->objcreated = array();
+   }
+
+
+   protected function tearDown() {
+      global $DB;
+
+      // Cleanup log directory
+      foreach(glob(GLPI_LOG_DIR . '/*.log') as $file) {
+         unlink($file);
+      }
+
+      // Need Innodb -- $DB->rollback()  -- workaround:
+      foreach ($DB->objcreated as $table => $ids) {
+         foreach ($ids as $id) {
+            $DB->query($q="DELETE FROM `$table` WHERE `id`=$id");
+         }
+      }
+      unset($DB->objcreated);
+   }
+
+
+   /**
+    * Connect using the test user
+    */
+   protected function login() {
+
+      $auth = new Auth();
+      if (!$auth->Login(TU_USER, TU_PASS, true)) {
+         $this->markTestSkipped('No login');
+      }
+   }
+
+
+   /**
+    * change current entity
+    */
+   protected function setEntity($entityname, $subtree) {
+
+      $this->assertTrue(Session::changeActiveEntities(getItemByTypeName('Entity', $entityname,  true), $subtree));
+   }
 
 
    /**

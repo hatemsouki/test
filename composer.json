@@ -1,0 +1,38 @@
+{
+    "name": "glpi/glpi",
+    "description": "GLPI dependencies",
+    "license": "GPL-2.0",
+    "type": "project",
+    "homepage": "http://www.glpi-project.org/",
+    "support": {
+        "irc": "irc://irc.freenode.org/glpi",
+        "forum": "http://forum.glpi-project.org/",
+        "issues": "https://github.com/glpi-project/glpi/issues",
+        "docs": "https://github.com/glpi-project/doc"
+    },
+    "require": {
+		"php": ">=5.4.0",
+        "ext-mysqli": "*",
+        "ext-fileinfo": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-gd": "*",
+        "ext-zlib": "*",
+        "ext-curl": "*",
+
+        "zendframework/zend-i18n": "^2.10",
+		  "zendframework/zend-cache": "2.*"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "~5",
+		  "phpunit/phpunit": "^9.5"
+    },
+    "suggest": {
+        "ext-ldap": "Used ot provide LDAP authentication and synchronization",
+        "ext-imap": "Used for collection from IMAP"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.19"        }
+    }
+	}
